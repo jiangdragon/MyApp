@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   width="100%" height="100%" >
+	<fx:Declarations>
+		<!-- 数据列表 -->
+		<fx:Array id="exampleData" xmlns:bs="basic.*">
+			<bs:TreeExample label="Series Types">
+				<bs:TreeExample label="Columns and bars">
+					<bs:TreeExample label="Simple Columns" classRef="examples.columns.Columns"/>
+					<bs:TreeExample label="Floating Bars" classRef="examples.columns.SimpleBars"/>
+					<bs:TreeExample label="Percent  Columns" classRef="examples.columns.PercentColumns"/>
+					<bs:TreeExample label="Floating Columns" classRef="examples.columns.FloatingColumns"/>
+					<bs:TreeExample label="Grouping Columns" classRef="examples.columns.StackingColumns"/>
+					<bs:TreeExample label="column widths" classRef="examples.columns.ColumnWidth"/>
+					<bs:TreeExample label="complex stacking" classRef="examples.columns.ComplexColumns"/>
+				</bs:TreeExample>
+				<bs:TreeExample label="Lines">
+					<bs:TreeExample label="Simple Lines" classRef="examples.lines.SimpleLines"/>
+					<bs:TreeExample label="Line Types" classRef="examples.lines.LineForm"/>
+					<bs:TreeExample label="Missing Values" classRef="examples.lines.MissingValues"/>
+					<bs:TreeExample label="rendering items" classRef="examples.lines.LineItems"/>
+					<bs:TreeExample label="Non Linear" classRef="examples.lines.NonLinear"/>
+				</bs:TreeExample>
+				<bs:TreeExample label="Areas">
+					<bs:TreeExample label="Simple Areas" classRef="examples.area.SimpleArea"/>
+					<bs:TreeExample label="Area Types" classRef="examples.area.AreaForm"/>
+					<bs:TreeExample label="rendering items" classRef="examples.area.AreaItems"/>
+					<bs:TreeExample label="Floating Area" classRef="examples.area.FloatingArea"/>
+					<bs:TreeExample label="Stacking Areas" classRef="examples.area.StackedArea"/>
+				</bs:TreeExample>
+				<bs:TreeExample label="Bubble and Plot">
+					<bs:TreeExample label="Simple Bubble Series" classRef="examples.bubble.SimpleBubble"/>
+					<bs:TreeExample label="Simple Plot Series" classRef="examples.plot.SimplePlot"/>
+				</bs:TreeExample>
+				<bs:TreeExample label="Pie Series">
+					<bs:TreeExample label="Simple Pie Series" classRef="examples.pie.SimplePie"/>
+					<bs:TreeExample label="Pie Labels" classRef="examples.pie.PieLabels"/>
+					<bs:TreeExample label="Exploding Pie" classRef="examples.pie.PieExplode"/>
+				</bs:TreeExample>
+			</bs:TreeExample>
+			<bs:TreeExample label="General Features">
+				<bs:TreeExample label="Field based data schema" classRef="examples.series.FieldTypes"/>
+				<bs:TreeExample label="datatips" classRef="examples.general.Datatips"/>
+				<bs:TreeExample label="Secondary Axes" classRef="examples.general.Seconds"/>
+				<bs:TreeExample label="watching collections" classRef="examples.general.RT"/>
+			</bs:TreeExample>
+			<bs:TreeExample label="Axes">
+				<bs:TreeExample label="Linear" classRef="examples.axes.Linear"/>
+				<bs:TreeExample label="Log" classRef="examples.axes.Log"/>
+				<bs:TreeExample label="Date/Time" classRef="examples.axes.DateTime"/>
+			</bs:TreeExample>
+			<bs:TreeExample label="Styles">
+				<bs:TreeExample label="Fills" classRef="examples.styling.Fills"/>
+				<bs:TreeExample label="chart series styles" classRef="examples.styling.ChartSeriesStyles"/>
+				<bs:TreeExample label="MXML styles" classRef="examples.styling.MXMLStyles"/>
+				<bs:TreeExample label="Axis Labels" classRef="examples.styling.AxisLabels"/>
+				<bs:TreeExample label="Item Renderers" classRef="examples.styling.ItemRenderer"/>
+			</bs:TreeExample>
+			<bs:TreeExample label="Effects">
+				<bs:TreeExample label="Interpolate" classRef="examples.effects.Interpolate"/>
+				<bs:TreeExample label="Zoom" classRef="examples.effects.Zoom"/>
+				<bs:TreeExample label="Slide" classRef="examples.effects.Slide"/>
+			</bs:TreeExample>
+			<bs:TreeExample label="Customization">
+				<bs:TreeExample label="Per Column Colors" classRef="examples.customizing.SimpleRenderer"/>
+				<bs:TreeExample label="Bar Labels" classRef="examples.customizing.BarWithLabel"/>
+				<bs:TreeExample label="Custom Annotation" classRef="examples.customizing.CustomAnnotation"/>
+				<bs:TreeExample label="Mouse Handling" classRef="examples.customizing.MouseHandling"/>
+			</bs:TreeExample>
+			<bs:TreeExample label="DataGrid">
+				<bs:TreeExample label="AdvancedDataGrid" classRef="examples.dataGrid.AdvancedDataGrids"/>
+			</bs:TreeExample>
+			<bs:TreeExample label="BitMapData">
+				<bs:TreeExample label="轻纱般的变幻线" classRef="examples.bitMapData.Mystify"/>
+				<bs:TreeExample label="彩图变黑白图" classRef="examples.bitMapData.PictureToBlack"/>
+				<bs:TreeExample label="图片Scroll" classRef="examples.bitMapData.PictureScroll"/>
+			</bs:TreeExample>
+			<bs:TreeExample label="Browser">
+				<bs:TreeExample label="浏览器测试" classRef="examples.browser.browserVersion"/>
+			</bs:TreeExample>
+		</fx:Array>
+	</fx:Declarations>
+	<fx:Style source="css/style.css"/>
+	<s:Scroller width="100%" height="100%">
+		<s:Group>
+			<!-- 布局 -->
+			<s:layout>
+				<s:HorizontalLayout paddingBottom="0" paddingLeft="0" paddingRight="0"
+									paddingTop="0" horizontalAlign="left" gap="0"/>
+			</s:layout>
+	
+			<fx:Script>
+				<![CDATA[
+					import basic.Example;
+					[Bindable] public var currentTreeExample:TreeExample;
+					[Bindable] public var currentExampleInstance:Example;
+					private function showExample(te:TreeExample):void{
+						if(te == currentTreeExample){
+							return;
+						}
+						if(te.classRef != null){
+							if(currentExampleInstance != null){
+								currentExampleInstance.stop();
+								holder.removeChild(currentExampleInstance);
+							}
+							currentTreeExample = te;
+							var c:Class = te.classRef;
+							currentExampleInstance = new c();
+							holder.addChild(currentExampleInstance);
+							
+							if(currentExampleInstance.controls != null){
+								controlOwner.removeAllChildren();
+								for(var i:int=0;i<currentExampleInstance.controls.length;i++){
+									controlOwner.addChild(currentExampleInstance.controls[i]);
+								}
+							}
+							currentExampleInstance.start();
+						}
+						//myTree.selectedItem = currentTreeExample;
+					}
+				]]>
+			</fx:Script>
+			<!-- 树型结构 -->
+			<mx:Tree id="myTree" width="200" height="100%" contentBackgroundColor="#565656"
+					 dataProvider="{exampleData}" showRoot="true" color="#000000"
+					 change="showExample(myTree.selectedItem as TreeExample)"/>
+			<!-- 一条垂直线条 -->
+			<mx:VRule height="100%"/>
+			<!-- 对象的描述 -->
+			<mx:Form height="100%" minHeight="0" backgroundColor="#565656">
+				<mx:FormItem label="exampleName:">
+					<mx:Label text="{currentTreeExample.label}" styleName="formLabel"/>
+				</mx:FormItem>
+				<mx:FormItem label="description:">
+					<mx:Text width="200" text="{currentExampleInstance.currentDescription}" 
+							 styleName="formLabel"/>
+				</mx:FormItem>
+				<mx:FormItem id="controlOwner" includeInLayout="{currentExampleInstance.controls != null}"
+							 label="controls:" visible="{currentExampleInstance.controls != null}">
+				</mx:FormItem>
+			</mx:Form>
+			<!-- 展现内容 -->
+			<mx:HBox id="frame" width="100%" height="100%" styleName="frame" backgroundColor="#343434">
+				<mx:HBox id="holder" width="100%" height="100%" backgroundColor="#FFFFFF" styleName="frame"/>
+			</mx:HBox>
+		</s:Group>
+	</s:Scroller>
+</s:Application>

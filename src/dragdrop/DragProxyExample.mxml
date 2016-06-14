@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- dragdrop\DragProxyExample.mxml -->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.DragManager;
+			import mx.core.DragSource;
+			import mx.events.DragEvent;
+			import flash.events.MouseEvent;
+			
+			[Embed(source='./assets/eek.gif')]
+			public var globeImage:Class;
+			
+			// mouseMove事件管理器用来初始化图像看见的拖动放置操作。
+			private function mouseOverHandler(event:MouseEvent):void 
+			{                
+				var dragInitiator:Image=Image(event.currentTarget);
+				var ds:DragSource = new DragSource();
+				ds.addData(dragInitiator, "img");               
+				
+				// 拖动管理器，使用图像控件为拖动代理，以显示图片在画布中被拖动。
+				var imageProxy:Image = new Image();
+				imageProxy.source = globeImage;
+				imageProxy.height=15;
+				imageProxy.width=15;                
+				DragManager.doDrag(dragInitiator, ds, event, 
+					imageProxy, -15, -15, 1.00);
+			}
+			
+			// dragEnter事件管理器用来使画布容器可以被放入数据。
+			private function dragEnterHandler(event:DragEvent):void {
+				if (event.dragSource.hasFormat("img"))
+				{
+					DragManager.acceptDragDrop(Canvas(event.currentTarget));
+				}
+			}
+			
+			// dragDrop事件管理器用来在画布容器中，通过dropping来设定图片控件的位置。
+			private function dragDropHandler(event:DragEvent):void {
+				Image(event.dragInitiator).x = 
+					Canvas(event.currentTarget).mouseX;
+				Image(event.dragInitiator).y = 
+					Canvas(event.currentTarget).mouseY;
+			}
+		]]>
+	</mx:Script>
+	<mx:Panel 
+		title="容器为放置目标示例" width="90%" height="90%"
+		horizontalAlign="center"
+		verticalAlign="middle">    
+		<!-- 画布为放置目标容器 --> 
+		<mx:Canvas id="v1" 
+				   width="100%" height="100%"  
+				   borderStyle="solid" 
+				   backgroundColor="#FBF4D9"
+				   dragEnter="dragEnterHandler(event);" 
+				   dragDrop="dragDropHandler(event);">
+			
+			<!-- 图片为拖动初始者 -->
+			<mx:Image id="myimg" 
+					  source="@Embed(source='./assets/eek.gif')" 
+					  mouseMove="mouseOverHandler(event);"/> 
+		</mx:Canvas>
+	</mx:Panel> 
+</mx:Application>

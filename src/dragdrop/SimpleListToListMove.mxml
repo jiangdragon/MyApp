@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- dragdrop\SimpleListToListMove.mxml -->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+				creationComplete="initApp();">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			private function initApp():void {
+				srclist.dataProvider = 
+					new ArrayCollection(['读书', '看电视', '做运动', '逛街', '种菜']);
+				destlist.dataProvider = new ArrayCollection([]);
+			}
+		]]>
+	</mx:Script>
+	<mx:Panel 
+		title="拖动选项示例" width="90%" height="90%"
+		horizontalAlign="center"
+		verticalAlign="middle">
+		<mx:HBox>
+			<mx:VBox>
+				<mx:Label text="可供选择的行为"/>
+				<mx:List id="srclist" 
+						 allowMultipleSelection="true"
+						 dragEnabled="true"
+						 dragMoveEnabled="true"/>
+			</mx:VBox>
+			
+			<mx:VBox>
+				<mx:Label text="所选择的行为"/>
+				<mx:List id="destlist" 
+						 dropEnabled="true"/>
+			</mx:VBox>
+		</mx:HBox>
+	</mx:Panel>
+	
+</mx:Application>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ex:Example xmlns:ex="basic.*" xmlns="http://www.adobe.com/2006/mxml"
+				creationComplete="init()">
+	<Script>
+		<![CDATA[
+			
+			private var loader:Loader;
+			private var loaderUrl:String = "image/01.jpg";
+			override public function get descriptions():Array {
+				return ["彩图变黑白图"];
+			}
+			private function init():void{
+				loader = new Loader();//加载图片
+				loader.load(new URLRequest(loaderUrl));
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onComplete);
+			}
+			
+			private function onComplete(event:Event):void{
+				var width:Number = loader.content.width;
+				var height:Number = loader.content.height;
+				Can.addChild(new Bitmap(Bitmap(loader.content).bitmapData));
+				var bmpData:BitmapData = new BitmapData(width,height,false,0xffffff);
+				bmpData.draw(loader);
+				for(var i:int = 0 ;i <width; i++){
+					for(var j:int = 0; j<height; j++){
+						var color:uint = bmpData.getPixel(i,j); //取该位置像素的RGB值
+						if(color>0x605555){//判断颜色进行处理
+							bmpData.setPixel(i,j,0xffffff);//设置该像素为白色
+						}else{
+							bmpData.setPixel(i,j,0x00000);//设置该像素为黑色
+						}
+					}
+				}
+				var bitmap:Bitmap = new Bitmap(bmpData);
+				bitmap.y = height + 5;
+				Can.addChild(bitmap);
+			}
+		]]>
+	</Script>
+	<UIComponent id="Can" width="100%" height="100%"/>
+</ex:Example>

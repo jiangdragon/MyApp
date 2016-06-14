@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- dragdrop\DandDListToDG.mxml -->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+				creationComplete="initApp();">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.events.DragEvent;
+			import mx.managers.DragManager;
+			import mx.core.DragSource;
+			import mx.collections.IList;
+			import mx.collections.ArrayCollection;
+			
+			private function initApp():void {
+				srcList.dataProvider = new ArrayCollection([
+					{label:"第一列", data:"1"},
+					{label:"第二列", data:"2"},
+					{label:"第三列", data:"3"},
+					{label:"第四列", data:"4"},
+				]);
+				
+				destDG.dataProvider = new ArrayCollection([]);
+			}
+			
+			private function dragDropHandler(event:DragEvent):void {
+				if (event.dragSource.hasFormat("items"))
+				{
+					// 定义自处理dragDrop事件。
+					event.preventDefault();
+					
+					event.currentTarget.hideDropFeedback(event);
+					
+					// 得到放置目标。
+					var dropTarget:DataGrid = 
+						DataGrid(event.currentTarget);
+					
+					var itemsArray:Array = 
+						event.dragSource.dataForFormat('items') as Array;
+					var tempItem:Object = 
+						{ label: itemsArray[0].label, 
+							data: itemsArray[0].data, 
+							date: new Date()
+						};
+					
+					// 得到在放置目标上的放置位置。
+					var dropLoc:int = dropTarget.calculateDropIndex(event);
+					
+					IList(dropTarget.dataProvider).addItemAt(tempItem, dropLoc);
+					
+					
+				}
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:Panel 
+		title="不同类型控件中复制移动数据示例" width="90%" height="90%"
+		horizontalAlign="center"
+		verticalAlign="middle">  
+		<mx:HBox>
+			<mx:List  id="srcList" 
+					  dragEnabled="true"
+					  dragMoveEnabled="true"/>
+			
+			<mx:DataGrid  id="destDG" 
+						  dropEnabled="true"
+						  dragDrop="dragDropHandler(event);">
+				<mx:columns>
+					<mx:DataGridColumn headerText="名称" dataField="label"/>
+					<mx:DataGridColumn headerText="数据" dataField="data"/>            
+					<mx:DataGridColumn headerText="日期" dataField="date"/>            
+				</mx:columns>                
+			</mx:DataGrid>            
+		</mx:HBox>
+	</mx:Panel>
+	
+</mx:Application>

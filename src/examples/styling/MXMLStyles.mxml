@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ex:Example  xmlns:ex="basic.*" xmlns="http://www.adobe.com/2006/mxml" xmlns:s="examples.styling.*">
+
+	<Script>
+		<![CDATA[
+
+			override public function get descriptions():Array {
+				return ["a chart that defines its own chartSeriesStyles"];
+			}
+
+		]]>
+	</Script>
+	<Style>
+		.mxmlStyledColumn {
+			strokeColor: #FF0000;
+			strokeWidth:4;
+		}
+	</Style>
+
+<!--	<s:Selectors name=".mxmlStyledColumn">
+		<s:StyleValue name="stroke">
+			<Stroke color="#FF0000" weight="4" />
+		</s:StyleValue>
+	</s:Selectors>-->
+
+
+	<Model id="dataSet" source="/data/sampleData.xml" />
+	<Stroke id="columnStroke" weight="4" color="#FF0000" />
+	<ColumnChart id="chart" width="100%" height="100%" dataProvider="{dataSet.Sample}">
+		<series>
+			<ColumnSeries yField="revenue" stroke="{columnStroke}"/>
+		</series>
+		<horizontalAxis>
+			<CategoryAxis categoryField="month" />
+		</horizontalAxis>
+	</ColumnChart>
+
+</ex:Example>
+

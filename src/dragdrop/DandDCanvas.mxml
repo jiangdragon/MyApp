@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- dragdrop\DandDCanvas.mxml -->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				backgroundColor="white">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			import mx.core.DragSource;
+			import mx.managers.DragManager;
+			import mx.events.*;
+			import mx.containers.Canvas;
+			
+			// 初始化拖动放置操作
+			private function mouseMoveHandler(event:MouseEvent):void {
+				// 在事件对象中得到拖动初始者组件。
+				var dragInitiator:Canvas=Canvas(event.currentTarget);
+				// 得到拖动初始者组件的颜色。
+				var dragColor:int = dragInitiator.getStyle('backgroundColor');
+				// 建立一个DragSource对象。
+				var ds:DragSource = new DragSource();
+				// 将事件加入的对象中。
+				ds.addData(dragColor, 'color');
+				// 调用DragManager的doDrag()方法来起始拖动。
+				DragManager.doDrag(dragInitiator, ds, event);
+			}
+			
+			// 当用户移动拖动代理到放置目标上。
+			private function dragEnterHandler(event:DragEvent):void {
+				// 如果格式为'color'则接受对象。
+				if (event.dragSource.hasFormat('color')) {
+					// 从事件对象中得到放置对象组件。
+					var dropTarget:Canvas=Canvas(event.currentTarget);
+					// 接受放置。
+					DragManager.acceptDragDrop(dropTarget);
+				}
+			}
+			
+			//当目标接受拖动对象，并且用户在画布容器上释放鼠标键。
+			private function dragDropHandler(event:DragEvent):void {
+				// 从拖动初始者得到数据
+				var data:Object = event.dragSource.dataForFormat('color');
+				// 设置画布颜色。
+				myCanvas.setStyle("backgroundColor", data);
+			}    
+		]]>
+	</mx:Script>
+	
+	<!-- A horizontal box with red and green canvases the user can drag -->
+	<mx:Panel 
+		title="自定义拖放行为示例" width="90%" height="90%"
+		horizontalAlign="center"
+		verticalAlign="middle">
+		
+		<mx:HBox>
+			<mx:Canvas 
+				width="30" height="30" 
+				backgroundColor="red" 
+				borderStyle="solid" 
+				mouseMove="mouseMoveHandler(event);"/>
+			<mx:Canvas 
+				width="30" height="30" 
+				backgroundColor="green" 
+				borderStyle="solid" 
+				mouseMove="mouseMoveHandler(event);"/>
+		</mx:HBox>
+		
+		<mx:Label text="拖动颜色到画布中"/>
+		
+		<!-- dragEnter和dragDrop事件运行放置 -->
+		<mx:Canvas id="myCanvas" 
+				   width="100" height="100" 
+				   backgroundColor="#FFFFFF" 
+				   borderStyle="solid" 
+				   dragEnter="dragEnterHandler(event);" 
+				   dragDrop="dragDropHandler(event);"/>
+	</mx:Panel>
+</mx:Application>

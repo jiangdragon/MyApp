@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- dragdrop\SimpleTreeSelf.mxml -->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	<mx:Script>
+		<![CDATA[
+			// 初始化树结构数据源。
+			private function initApp():void {
+				firstList.dataProvider = treeDP;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:XML id="treeDP">
+		<node label="邮件">
+			<node label="收件箱"/>
+			<node label="个人信箱">
+				<node label="示例"/>
+				<node label="隐私"/>
+				<node label="保存"/>
+				<node label="信息"/>
+			</node>
+			<node label="日历"/>
+			<node label="发出"/>
+			<node label="垃圾箱"/>
+		</node>
+	</mx:XML>
+	<mx:Panel 
+		title="树结构拖动示例" width="90%" height="90%"
+		horizontalAlign="center"
+		verticalAlign="middle">
+		<mx:Tree id="firstList" 
+				 width="90%"
+				 height="80%"
+				 showRoot="false"
+				 labelField="@label"
+				 dragEnabled="true" 
+				 dropEnabled="true" 
+				 allowMultipleSelection="true"
+				 creationComplete="initApp();"/>
+	</mx:Panel>
+	
+</mx:Application>

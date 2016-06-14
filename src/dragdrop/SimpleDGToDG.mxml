@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- dragdrop\SimpleDGToDG.mxml -->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+				creationComplete="initApp();">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			private function initApp():void {
+				srcgrid.dataProvider = new ArrayCollection([
+					{摄影师:'Carole King', 照片:'Tapestry', 价格:11.99},
+					{摄影师:'Paul Simon', 照片:'Graceland', 价格:10.99},
+					{摄影师:'Original Cast', 照片:'Camelot', 价格:12.99},
+					{摄影师:'The Beatles', 照片:'The White', 价格:11.99}
+				]);
+				
+				destgrid.dataProvider = new ArrayCollection([]);    
+			}
+		]]>
+	</mx:Script>
+	<mx:Panel 
+		title="数据列表拖放示例" width="90%" height="90%"
+		horizontalAlign="center"
+		verticalAlign="middle">
+		<mx:HBox>
+			<mx:VBox>
+				<mx:Label text="列表1"/>
+				<mx:DataGrid id="srcgrid" 
+							 allowMultipleSelection="true" 
+							 dragEnabled="true" 
+							 dropEnabled="true" 
+							 dragMoveEnabled="true">
+					<mx:columns>
+						<mx:DataGridColumn dataField="摄影师"/>
+						<mx:DataGridColumn dataField="照片"/>
+						<mx:DataGridColumn dataField="价格"/>
+					</mx:columns>    
+				</mx:DataGrid>
+			</mx:VBox>
+			
+			<mx:VBox>
+				<mx:Label text="列表2"/>
+				<mx:DataGrid id="destgrid" 
+							 allowMultipleSelection="true" 
+							 dragEnabled="true" 
+							 dropEnabled="true" 
+							 dragMoveEnabled="true">
+					<mx:columns>
+						<mx:DataGridColumn dataField="摄影师"/>
+						<mx:DataGridColumn dataField="照片"/>
+						<mx:DataGridColumn dataField="价格"/>
+					</mx:columns>    
+				</mx:DataGrid>
+			</mx:VBox>
+		</mx:HBox>
+	</mx:Panel>
+</mx:Application>

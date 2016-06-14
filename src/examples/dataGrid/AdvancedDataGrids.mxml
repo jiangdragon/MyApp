@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ex:Example  xmlns:ex="basic.*" xmlns="http://www.adobe.com/2006/mxml" 
+				 xmlns:dataGrid="examples.dataGrid.*">
+	<Script>
+		<![CDATA[
+			import flash.sampler.Sample;
+			override public function get descriptions():Array {
+				return ["a simple AdvancedDataGrid"];
+			}
+		]]>
+	</Script>
+	<Model id="dataSet" source="/data/advancedData.xml" />
+	<AdvancedDataGrid id="adv" dataProvider="{dataSet.Sample}" headerWordWrap="true"
+					  headerSortSeparatorSkin="mx.skins.ProgrammaticSkin" sortableColumns="false"
+					  sortExpertMode="true" designViewDataType="flat" dragEnabled="false">
+		<groupedColumns>
+			<AdvancedDataGridColumn headerText="月份" dataField="month"
+									headerRenderer="examples.dataGrid.MyRenderer">
+			</AdvancedDataGridColumn>
+			
+			<AdvancedDataGridColumn headerText="期初总户数" dataField="startTotal" />
+			<AdvancedDataGridColumnGroup headerText="企业">
+				<AdvancedDataGridColumn headerText="期初户数" dataField="businessStartCount" />
+				<AdvancedDataGridColumn headerText="本月增加户数" dataField="businessAdd" />
+				<AdvancedDataGridColumn headerText="本月减少户数" dataField="businessCut" />
+				<AdvancedDataGridColumn headerText="期末户数" dataField="businessEndCount" />
+			</AdvancedDataGridColumnGroup>
+			
+			<AdvancedDataGridColumnGroup headerText="个体工商户">
+				<AdvancedDataGridColumn headerText="期初户数" dataField="personalStartCount" />
+				<AdvancedDataGridColumn headerText="本月增加户数" dataField="personalAdd" />
+				<AdvancedDataGridColumn headerText="本月减少户数" dataField="personalCut" />
+				<AdvancedDataGridColumn headerText="期末户数" dataField="personalEndCount" />
+				<AdvancedDataGridColumnGroup headerText="其中">
+					<AdvancedDataGridColumn headerText="起征点以上户" dataField="businessPonintUp" />
+					<AdvancedDataGridColumn headerText="起征点以下户" dataField="businessPonintDown" />
+				</AdvancedDataGridColumnGroup>
+			</AdvancedDataGridColumnGroup>
+			
+			<AdvancedDataGridColumn headerText="期末总户数" dataField="endTotal" />
+		</groupedColumns>
+	</AdvancedDataGrid>
+</ex:Example>

@@ -1,0 +1,26 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+s|Application {
+	backgroundColor: #343434;
+}
+mx|Tree{
+	color: #FFFFFF;
+}
+mx|VRule{
+	strokeColor: #FFFFFF;
+	strokeWidth: 1;
+}
+mx|FormItemLabel{
+	color: #FFFFFF;
+	roll-over-color: #FFFFFF;
+}
+.frame{
+	padding-left: 20;
+	padding-top: 20;
+	padding-right: 20;
+	padding-bottom: 20;
+}
+.formLabel{
+	color: #FFFFFF;
+}

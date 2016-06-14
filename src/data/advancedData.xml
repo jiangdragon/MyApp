@@ -1,0 +1,17 @@
+<YearlyData>
+	<Sample month="1" startTotal="25000" businessStartCount="4000" businessAdd="38865" businessCut="4000"
+		businessEndCount="3000" personalStartCount="150" personalAdd="111" personalCut="30" 
+		personalEndCount="3000" businessPonintUp="16" businessPonintDown="1500" endTotal="4000"/>
+	<Sample month="2" startTotal="25000" businessStartCount="4000" businessAdd="38865" businessCut="4000"
+		businessEndCount="3000" personalStartCount="150" personalAdd="111" personalCut="30" 
+		personalEndCount="3000" businessPonintUp="16" businessPonintDown="1500" endTotal="4000"/>
+	<Sample month="3" startTotal="25000" businessStartCount="4000" businessAdd="38865" businessCut="4000"
+		businessEndCount="3000" personalStartCount="150" personalAdd="111" personalCut="30" 
+		personalEndCount="3000" businessPonintUp="16" businessPonintDown="1500" endTotal="4000"/>
+	<Sample month="4" startTotal="25000" businessStartCount="4000" businessAdd="38865" businessCut="4000"
+		businessEndCount="3000" personalStartCount="150" personalAdd="111" personalCut="30" 
+		personalEndCount="3000" businessPonintUp="16" businessPonintDown="1500" endTotal="4000"/>
+	<Sample month="5" startTotal="25000" businessStartCount="4000" businessAdd="38865" businessCut="4000"
+		businessEndCount="3000" personalStartCount="150" personalAdd="111" personalCut="30" 
+		personalEndCount="3000" businessPonintUp="16" businessPonintDown="1500" endTotal="4000"/>	
+</YearlyData>

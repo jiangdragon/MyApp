@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ex:Example  xmlns:ex="basic.*" xmlns="http://www.adobe.com/2006/mxml">
+
+	<Script>
+	<![CDATA[
+		import mx.charts.HitData;
+		import mx.charts.chartClasses.ChartBase;
+		override public function get descriptions():Array {
+			return ["a simple two series column chart"];
+		}
+		private function updateDetails(e:MouseEvent):void{
+			/* first show the coordiantes represented where the event happened, relative to the target of the event */
+			epos.text = "(" + e.localX + "," + e.localY + ")";
+
+			/* now show the coordiantes of the mouse relative to the chart */
+			var p:Point = new Point(chart.mouseX,chart.mouseY);
+			mpos.text = "(" + p.x + "," + p.y + ")";
+			/* now ask the chart what data values that represents */
+			p = new Point(plotSeries.mouseX,plotSeries.mouseY);
+			var d:Array = plotSeries.localToData(p);
+			dpos.text = "(" + Math.floor(d[0]) + "," + Math.floor(d[1]) + ")";
+			/* now ask the chart to convert those data values back into screen coordinates */
+			p = plotSeries.dataToLocal(d[0],d[1]);
+			spos.text ="(" + Math.floor(p.x) + "," + Math.floor(p.y) + ")";
+		}
+
+		[Bindable] public var overItem:Boolean = false;
+		]]>
+	</Script>
+
+	<ex:controls>
+		<Label text="mousePos:" styleName="formLabel" />
+		<Label id="mpos" styleName="formLabel"/>
+		<Label text="dataSet:" styleName="formLabel"/>
+		<Label id="dpos" styleName="formLabel"/>
+		<Label text="screenPos:" styleName="formLabel"/>
+		<Label id="spos" styleName="formLabel"/>
+		<Label text="eventPos:" styleName="formLabel"/>
+		<Label id="epos" styleName="formLabel"/>
+		<Label text="MOUSE OVER DATAPOINT" visible="{overItem}" styleName="formLabel"/>
+	</ex:controls>
+
+	<Model id="dataSet" source="/data/sampleData.xml" />
+
+	<PlotChart id="chart" width="100%" dataProvider="{dataSet.Sample}"  height="100%" mouseMove="updateDetails(event)"
+		itemRollOver="overItem=true" itemRollOut="overItem=false" >
+		<series>
+			<PlotSeries id="plotSeries" xField="revenue" yField="costs" itemRenderer="mx.charts.renderers.CircleItemRenderer" radius="3"/>
+		</series>
+	</PlotChart>
+
+</ex:Example>
+
